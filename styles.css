@@ -9,8 +9,9 @@ body {
 
 #books {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
   margin-top: 20px;
 }
 
@@ -20,7 +21,8 @@ body {
   margin: 5px;
   cursor: pointer;
   text-align: center;
-  width: 100px;
+  width: 90%;
+  max-width: 600px;
 }
 
 .book-box {
@@ -85,12 +87,13 @@ body {
 
 .search-container {
   margin: 20px;
+  width: 90%;
+  max-width: 600px;
 }
 
 #search {
   padding: 10px;
-  width: 300px;
-  max-width: 100%;
+  width: 100%;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
