@@ -9,13 +9,25 @@
   <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000">
   <title>bible.extrememission.org</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital@0;1&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Titillium+Web:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">  <!-- Your main stylesheet -->
   <link rel="stylesheet" href="modal.css">   <!-- Stylesheet for the modal -->
   <link rel="manifest" href="/site.webmanifest">
 </head>
 <body>
+  <div id="persistent-menu" class="menu" role="navigation" aria-label="Persistent Menu">
+    <button id="go-back-button" aria-label="Go Back">Go Back</button>
+    <button id="search-button" aria-label="Search">Search</button>
+    <button id="navigate-button" aria-label="Navigate">Navigate</button>
+    <label>
+      <input type="checkbox" id="hide-menu-checkbox" aria-label="Hide Menu"> Hide Menu
+    </label>
+  </div>
+  <label id="show-menu-checkbox" style="display: none;">
+    <input type="checkbox" aria-label="Show Menu"> Show Menu
+  </label>
+
   <div id="app">
     <div class="search-container">
       <input type="text" id="search" placeholder="search the scriptures">
