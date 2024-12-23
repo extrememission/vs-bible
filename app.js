@@ -52,33 +52,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-function applyUserSelectNone(element) {
-  element.style.webkitUserSelect = 'none';
-  element.style.userSelect = 'none';
-}
+  function applyUserSelectNone(element) {
+    element.style.webkitUserSelect = 'none';
+    element.style.userSelect = 'none';
+  }
 
-function addTouchListeners(element) {
-  element.addEventListener('touchstart', handleTouchStart, { passive: false });
-  element.addEventListener('touchend', handleTouchEnd, { passive: false });
-  element.addEventListener('click', handleClick, { passive: false });
+  function addTouchListeners(element) {
+    element.addEventListener('touchstart', handleTouchStart, { passive: false });
+    element.addEventListener('touchend', handleTouchEnd, { passive: false });
+    element.addEventListener('click', handleClick, { passive: false });
 
-  element.addEventListener('dblclick', (e) => {
-    if (e.target.classList.contains('verse-box')) {
-      const verseText = e.target.innerText;
-      // Split the text by the first two newlines or the last occurrence of newline to ensure it captures the verse text and reference correctly
-      const parts = verseText.split(/\n\n|\n(?!\d)/); // Split on two newlines or a single newline followed by non-digit
-      const text = parts.slice(0, -1).join('\n'); // Join all parts except the last one (verse reference)
-      const reference = parts.slice(-1)[0]; // The last part is the verse reference
+    element.addEventListener('dblclick', (e) => {
+      if (e.target.classList.contains('verse-box')) {
+        const verseText = e.target.innerText;
+        const parts = verseText.split(/\n\n|\n(?!\d)/);
+        const text = parts.slice(0, -1).join('\n');
+        const reference = parts.slice(-1)[0];
+        const formattedText = `${text}\n— ${reference.trim()}`;
 
-      const formattedText = `${text}\n— ${reference.trim()}`;
-
-      navigator.clipboard.writeText(formattedText)
-        .then(() => alert('Verse copied to clipboard!'))
-        .catch(err => console.error('Error copying verse:', err));
-    }
-  });
-}
-
+        navigator.clipboard.writeText(formattedText)
+          .then(() => alert('Verse copied to clipboard!'))
+          .catch(err => console.error('Error copying verse:', err));
+      }
+    });
+  }
 
   let startX, startY, touchStartTime;
   let touchTimer;
@@ -165,7 +162,7 @@ function addTouchListeners(element) {
       verseBox.dataset.chapter = chapter;
       verseBox.addEventListener('contextmenu', (e) => {
         e.preventDefault();
-toggleChapters(bookId); // Go back to the list of chapters
+        toggleChapters(bookId); // Go back to the list of chapters
       });
       addTouchListeners(verseBox);
       booksContainer.appendChild(verseBox);
@@ -195,7 +192,7 @@ toggleChapters(bookId); // Go back to the list of chapters
     return bibleData.filter(verse => verse.field[1] === parseInt(bookId) && verse.field[2] === parseInt(chapter));
   }
 
-function searchHandler() {
+  function searchHandler() {
     const searchTerm = searchInput.value.toLowerCase();
 
     if (searchTerm.length < 4) {
@@ -227,12 +224,13 @@ function searchHandler() {
           toggleChapters(bookId);
           toggleVerses(bookId, chapter, verseNumber);
           searchInput.value = ''; // Clear the search box
-resultCount.textContent = ''; // Clear the result count text
+          resultCount.textContent = ''; // Clear the result count text
         });
         booksContainer.appendChild(resultBox);
       });
     }, 500); // 500ms delay to debounce
   }
+
   function createBoxElement(text) {
     const box = document.createElement('div');
     box.className = 'box';
@@ -247,4 +245,36 @@ resultCount.textContent = ''; // Clear the result count text
       timeout = setTimeout(() => func(...args), delay);
     };
   }
+
+  // Persistent menu functions
+  function toggleMenuVisibility() {
+    const menu = document.getElementById('persistent-menu');
+    const checkbox = document.getElementById('hide-menu-checkbox');
+    if (checkbox.checked) {
+      menu.style.display = 'none';
+      document.getElementById('show-menu-checkbox').style.display = 'block';
+    } else {
+      menu.style.display = 'block';
+      document.getElementById('show-menu-checkbox').style.display = 'none';
+    }
+  }
+
+  function goBack() {
+    displayBooks();
+  }
+
+  function search() {
+    searchHandler();
+  }
+
+  function navigate() {
+    // Your existing navigate logic
+  }
+
+  // Add event listeners for menu buttons
+  document.getElementById('go-back-button').addEventListener('click', goBack);
+  document.getElementById('search-button').addEventListener('click', search);
+  document.getElementById('navigate-button').addEventListener('click', navigate);
+  document.getElementById('hide-menu-checkbox').addEventListener('change', toggleMenuVisibility);
+  document.getElementById('show-menu-checkbox').addEventListener('change', toggleMenuVisibility);
 });
